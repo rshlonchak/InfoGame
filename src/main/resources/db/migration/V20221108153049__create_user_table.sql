@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS "users"
     name                         VARCHAR(128),
     email                        VARCHAR(128) UNIQUE,
     PRIMARY KEY (id)
-)
+);

@@ -1,4 +1,4 @@
-package com.example.infogame.dto.user;
+package com.example.infogame.dto.game;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +9,10 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserCreateDto {
+public class GameCreateDto {
 
     @NotNull(message = "Empty name does not performed")
     private String name;
 
-    @NotNull(message = "Empty email does not performed")
-    private String email;
+    private String description;
 }
