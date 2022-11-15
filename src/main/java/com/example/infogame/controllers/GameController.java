@@ -3,8 +3,6 @@ package com.example.infogame.controllers;
 import com.example.infogame.dto.game.GameCreateDto;
 import com.example.infogame.dto.game.GameResponseDto;
 import com.example.infogame.dto.game.GameUpdateDto;
-import com.example.infogame.dto.user.UserResponseDto;
-import com.example.infogame.dto.user.UserUpdateDto;
 import com.example.infogame.service.GameService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
