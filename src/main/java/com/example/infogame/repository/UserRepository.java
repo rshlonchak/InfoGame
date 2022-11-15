@@ -20,6 +20,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     Optional<User> getUserById(int itemId);
 
     @Modifying
-    @Query("UPDATE users SET name=:name WHERE id=:itemId")
-    void renameUser(int itemId, String name);
+    @Query("UPDATE users SET name=:name, email=:email WHERE id=:itemId")
+    void updateUser(int itemId, String name, String email);
 }

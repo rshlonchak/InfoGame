@@ -3,12 +3,13 @@ package com.example.infogame.service;
 import com.example.infogame.dto.user.UserCreateDto;
 import com.example.infogame.dto.user.UserDtoMapper;
 import com.example.infogame.dto.user.UserResponseDto;
-import com.example.infogame.dto.user.UserRenameDto;
+import com.example.infogame.dto.user.UserUpdateDto;
 import com.example.infogame.models.User;
 import com.example.infogame.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -41,10 +42,20 @@ public class UserService {
         return UserDtoMapper.INSTANCE.userResponseFromEntity(user);
     }
 
-    public UserResponseDto updateUser(int userId, UserRenameDto userRenameDto) {
-        getUserByIdOrNotFound(userId);
-        userRepository.renameUser(userId, userRenameDto.getName());
+    public UserResponseDto updateUser(int userId, UserUpdateDto userUpdateDto) {
+        User user = getUserByIdOrNotFound(userId);
+        try {
+            updateUser(userId, userUpdateDto, user);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
         return UserDtoMapper.INSTANCE.userResponseFromEntity(getUserByIdOrNotFound(userId));
+    }
+
+    private void updateUser(int userId, UserUpdateDto userUpdateDto, User user) {
+        String name = Objects.isNull(userUpdateDto.getName()) ? user.getName() : userUpdateDto.getName();
+        String email = Objects.isNull(userUpdateDto.getEmail()) ? user.getEmail() : userUpdateDto.getEmail();
+        userRepository.updateUser(userId, name, email);
     }
 
     public void deleteUser(int userId) {

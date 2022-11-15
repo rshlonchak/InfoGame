@@ -10,5 +10,5 @@ public interface UserDtoMapper {
     UserDtoMapper INSTANCE = Mappers.getMapper(UserDtoMapper.class);
     UserResponseDto userResponseFromEntity(User entity);
     User fromEntity(UserCreateDto dto);
-    User toEntity(UserRenameDto dto);
+    User toEntity(UserUpdateDto dto);
 }

@@ -1,7 +1,7 @@
 package com.example.infogame.controllers;
 
 import com.example.infogame.dto.user.UserCreateDto;
-import com.example.infogame.dto.user.UserRenameDto;
+import com.example.infogame.dto.user.UserUpdateDto;
 import com.example.infogame.dto.user.UserResponseDto;
 import com.example.infogame.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,8 +35,8 @@ public class UserController {
     }
 
     @PutMapping("/user/{userId}")
-    public UserResponseDto renameUser(@PathVariable("userId") int userId, @RequestBody UserRenameDto userRenameDto) {
-        return userService.updateUser(userId, userRenameDto);
+    public UserResponseDto renameUser(@PathVariable("userId") int userId, @RequestBody UserUpdateDto userUpdateDto) {
+        return userService.updateUser(userId, userUpdateDto);
     }
 
     @DeleteMapping("/user/{userId}")
