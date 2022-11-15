@@ -62,4 +62,5 @@ public class GameService {
         Game game = getGameByIdOrNotFound(gameId);
         gameRepository.deleteById(game.getId());
     }
+
 }
