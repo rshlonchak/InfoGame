@@ -2,15 +2,15 @@ package com.example.infogame.controllers;
 
 import com.example.infogame.dto.user.UserCreateDto;
 import com.example.infogame.dto.user.UserUpdateDto;
-import com.example.infogame.dto.user.UserResponseDto;
 import com.example.infogame.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Tag(name="Users")
-@RestController
+@Controller
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -19,28 +19,65 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
-    public List<UserResponseDto> listUsers() {
-        return userService.getUsers();
+//    @GetMapping("/users")
+//    public List<UserResponseDto> listUsers() {
+//        return userService.getUsers();
+//    }
+
+    @GetMapping()
+    public String listUsers(Model model) {
+        model.addAttribute("users", userService.getUsers());
+        return "user/list";
     }
 
-    @PostMapping("/users")
-    public UserResponseDto createUser(@RequestBody UserCreateDto userCreateDto) {
-        return userService.createUser(userCreateDto);
+//    @PostMapping("/users")
+//    public UserResponseDto createUser(@RequestBody UserCreateDto userCreateDto) {
+//        return userService.createUser(userCreateDto);
+//    }
+
+    @GetMapping("/new")
+    public String newUser(Model model) {
+        model.addAttribute("user", new UserCreateDto());
+        return "user/new";
     }
 
-    @GetMapping("/user/{userId}")
-    public UserResponseDto getUser(@PathVariable("userId") int userId) {
-        return userService.getUserById(userId);
+    @PostMapping()
+    public String createUser(@ModelAttribute UserCreateDto userCreateDto) {
+        userService.createUser(userCreateDto);
+        return "redirect:/users";
     }
 
-    @PutMapping("/user/{userId}")
-    public UserResponseDto renameUser(@PathVariable("userId") int userId, @RequestBody UserUpdateDto userUpdateDto) {
-        return userService.updateUser(userId, userUpdateDto);
+//    @GetMapping("/user/{userId}")
+//    public UserResponseDto getUser(@PathVariable("userId") int userId) {
+//        return userService.getUserById(userId);
+//    }
+
+    @GetMapping("/{userId}")
+    public String getUser(@PathVariable("userId") int userId, Model model) {
+        model.addAttribute("user", userService.getUserById(userId));
+        return "user/profile";
     }
 
-    @DeleteMapping("/user/{userId}")
-    public void deleteUser(@PathVariable("userId") int userId) {
+//    @PutMapping("/{userId}")
+//    public UserResponseDto updateUser(@PathVariable("userId") int userId, @RequestBody UserUpdateDto userUpdateDto) {
+//        return userService.updateUser(userId, userUpdateDto);
+//    }
+
+    @GetMapping("/{userId}/edit")
+    public String editUser(@PathVariable("userId") int userId, Model model) {
+        model.addAttribute("user", userService.getUserById(userId));
+        return "user/edit";
+    }
+
+    @PutMapping("/{userId}")
+    public String updateUser(@PathVariable("userId") int userId, @ModelAttribute("user") UserUpdateDto userUpdateDto) {
+        userService.updateUser(userId, userUpdateDto);
+        return "redirect:/users/{userId}";
+    }
+
+    @DeleteMapping("/{userId}")
+    public String deleteUser(@PathVariable("userId") int userId) {
         userService.deleteUser(userId);
+        return "redirect:/users";
     }
 }
