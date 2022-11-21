@@ -15,6 +15,9 @@
 <form th:method="DELETE" th:action="@{/game/{id}(id=${game.getId()})}">
   <input type="submit" value="Delete"/>
 </form>
-
+<br/>
+<a th:href="@{/category}">Category</a>
+<br/>
+<a th:href="@{/}">Home</a>
 </body>
 </html>

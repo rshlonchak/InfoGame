@@ -6,6 +6,10 @@
 </head>
 <body>
 
+<a th:href="@{/users}">Користувачі</a>
+<br/>
+<hr/>
+
 <div th:each="game: ${games}">
   <a th:href="@{/game/{gameId}(gameId=${game.getId()})}" th:text="${game.getName()}"> game </a>
 </div>
