@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<form th:method="PUT" th:action="@{/game/{id}(id=${game.getId()})}" th:object="${game}">
+  <div>
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+
+    <br>
+
+    <label for="description">Enter description: </label>
+    <input type="text" th:field="*{description}" id="description"/>
+
+    <br>
+
+    <input type="submit" value="Update">
+  </div>
+</form>
+
+</body>
+</html>
