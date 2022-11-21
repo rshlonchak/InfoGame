@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Category</title>
+</head>
+<body>
+
+<p th:text="${category.getId()}"/>
+<p th:text="${category.getName()}"/>
+<p th:text="${category.getDescription()}"/>
+<p th:text="${category.getImage()}"/>
+<br/>
+<a th:href="@{/category/{id}/edit(id=${category.getId()})}">Edit</a>
+<br/>
+<form th:method="DELETE" th:action="@{/category/{id}(id=${category.getId()})}">
+  <input type="submit" value="Delete"/>
+</form>
+
+<a th:href="@{/category}">Home</a>
+
+</body>
+</html>
