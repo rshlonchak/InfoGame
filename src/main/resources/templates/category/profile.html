@@ -16,7 +16,9 @@
 <form th:method="DELETE" th:action="@{/category/{id}(id=${category.getId()})}">
   <input type="submit" value="Delete"/>
 </form>
-
+<br/>
+<a th:href="@{/category/unit}">Units</a>
+<br/>
 <a th:href="@{/category}">Home</a>
 
 </body>

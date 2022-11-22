@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/category/unit}" th:object="${unit}">
+  <div>
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+
+    <br>
+
+    <label for="description">Enter description: </label>
+    <input type="text" th:field="*{description}" id="description"/>
+
+    <br>
+
+    <label for="image">Enter image: </label>
+    <input type="text" th:field="*{image}" id="image"/>
+
+    <br>
+
+    <input type="submit" value="Create">
+  </div>
+</form>
+
+</body>
+</html>

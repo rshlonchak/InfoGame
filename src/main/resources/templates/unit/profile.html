@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Unit</title>
+</head>
+<body>
+
+<p th:text="${unit.getId()}"/>
+<p th:text="${unit.getName()}"/>
+<p th:text="${unit.getDescription()}"/>
+<p th:text="${unit.getImage()}"/>
+<br/>
+<a th:href="@{/category/unit/{id}/edit(id=${unit.getId()})}">Edit</a>
+<br/>
+<form th:method="DELETE" th:action="@{/category/unit/{id}(id=${unit.getId()})}">
+  <input type="submit" value="Delete"/>
+</form>
+
+<a th:href="@{/category/unit}">unit list</a>
+
+</body>
+</html>

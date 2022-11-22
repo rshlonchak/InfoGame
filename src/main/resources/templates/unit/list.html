@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Units</title>
+</head>
+<body>
+
+<div th:each="unit: ${units}">
+  <a th:href="@{/category/unit/{unitId}(unitId=${unit.getId()})}" th:text="${unit.getName()}"> unit </a>
+</div>
+
+<br/>
+<hr/>
+
+<a th:href="@{/category/unit/new}">Create unit</a>
+<br/>
+<a th:href="@{/}">Home</a>
+</body>
+</html>
