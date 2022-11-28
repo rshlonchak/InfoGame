@@ -2,11 +2,15 @@ package com.example.infogame.controllers;
 
 import com.example.infogame.dto.user.UserCreateDto;
 import com.example.infogame.dto.user.UserUpdateDto;
+import com.example.infogame.models.User;
 import com.example.infogame.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Tag(name="Users")
 @Controller
@@ -42,7 +46,13 @@ public class UserController {
     }
 
     @PostMapping()
-    public String createUser(@ModelAttribute UserCreateDto userCreateDto) {
+    public String createUser(
+            @ModelAttribute("UserCreateDto") @Valid UserCreateDto userCreateDto,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors())
+            return "user/new";
+
         userService.createUser(userCreateDto);
         return "redirect:/users";
     }
@@ -64,13 +74,23 @@ public class UserController {
 //    }
 
     @GetMapping("/{userId}/edit")
-    public String editUser(@PathVariable("userId") int userId, Model model) {
+    public String editUser(
+            @PathVariable("userId") int userId,
+            Model model
+    ) {
         model.addAttribute("user", userService.getUserById(userId));
         return "user/edit";
     }
 
-    @PutMapping("/{userId}")
-    public String updateUser(@PathVariable("userId") int userId, @ModelAttribute("user") UserUpdateDto userUpdateDto) {
+    @PostMapping("/{userId}")
+    public String updateUser(
+            @PathVariable("userId") int userId,
+            @ModelAttribute("UserUpdateDto") @Valid UserUpdateDto userUpdateDto,
+            BindingResult bindingResult
+            ) {
+        if (bindingResult.hasErrors())
+            return "user/edit";
+
         userService.updateUser(userId, userUpdateDto);
         return "redirect:/users/{userId}";
     }

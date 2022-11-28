@@ -6,6 +6,8 @@ import com.example.infogame.dto.category.CategoryResponseDto;
 import com.example.infogame.dto.category.CategoryUpdateDto;
 import com.example.infogame.models.Category;
 import com.example.infogame.repository.CategoryRepository;
+import com.example.infogame.validation.DtoValidator;
+import com.example.infogame.validation.DtoValidatorImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,9 @@ public class CategoryService {
     }
 
     public CategoryResponseDto createCategory(CategoryCreateDto categoryCreateDto) {
+        DtoValidator<CategoryCreateDto> validator = new DtoValidatorImpl<>();
+        validator.validate(categoryCreateDto);
+
         Category category = categoryRepository.save(CategoryDtoMapper.INSTANCE.fromEntity(categoryCreateDto));
         return CategoryDtoMapper.INSTANCE.categoryResponseFromEntity(category);
     }
@@ -44,6 +49,9 @@ public class CategoryService {
     }
 
     public CategoryResponseDto updateCategory(int categoryId, CategoryUpdateDto categoryUpdateDto) {
+        DtoValidator<CategoryUpdateDto> validator = new DtoValidatorImpl<>();
+        validator.validate(categoryUpdateDto);
+
         Category category = getCategoryByIdOrNotFound(categoryId);
         try {
             updateCategory(categoryId, categoryUpdateDto, category);

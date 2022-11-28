@@ -6,6 +6,8 @@ import com.example.infogame.dto.user.UserResponseDto;
 import com.example.infogame.dto.user.UserUpdateDto;
 import com.example.infogame.models.User;
 import com.example.infogame.repository.UserRepository;
+import com.example.infogame.validation.DtoValidator;
+import com.example.infogame.validation.DtoValidatorImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +29,9 @@ public class UserService {
     }
 
     public UserResponseDto createUser(UserCreateDto userCreateDto) {
+        DtoValidator<UserCreateDto> validator = new DtoValidatorImpl<>();
+        validator.validate(userCreateDto);
+
         User user = userRepository.save(UserDtoMapper.INSTANCE.fromEntity(userCreateDto));
         return UserDtoMapper.INSTANCE.userResponseFromEntity(user);
     }
@@ -43,6 +48,9 @@ public class UserService {
     }
 
     public UserResponseDto updateUser(int userId, UserUpdateDto userUpdateDto) {
+        DtoValidator<UserUpdateDto> validator = new DtoValidatorImpl<>();
+        validator.validate(userUpdateDto);
+
         User user = getUserByIdOrNotFound(userId);
         try {
             updateUser(userId, userUpdateDto, user);

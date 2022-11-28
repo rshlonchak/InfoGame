@@ -6,6 +6,8 @@ import com.example.infogame.dto.unit.UnitResponseDto;
 import com.example.infogame.dto.unit.UnitUpdateDto;
 import com.example.infogame.models.Unit;
 import com.example.infogame.repository.UnitRepository;
+import com.example.infogame.validation.DtoValidator;
+import com.example.infogame.validation.DtoValidatorImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,9 @@ public class UnitService {
     }
 
     public UnitResponseDto createUnit(UnitCreateDto unitCreateDto) {
+        DtoValidator<UnitCreateDto> validator = new DtoValidatorImpl<>();
+        validator.validate(unitCreateDto);
+
         Unit unit = unitRepository.save(UnitDtoMapper.INSTANCE.fromEntity(unitCreateDto));
         return UnitDtoMapper.INSTANCE.unitResponseFromEntity(unit);
     }
@@ -44,6 +49,9 @@ public class UnitService {
     }
 
     public UnitResponseDto updateUnit(int unitId, UnitUpdateDto unitUpdateDto) {
+        DtoValidator<UnitUpdateDto> validator = new DtoValidatorImpl<>();
+        validator.validate(unitUpdateDto);
+
         Unit unit = getUnitByIdOrNotFound(unitId);
         try {
             updateUnit(unitId, unitUpdateDto, unit);

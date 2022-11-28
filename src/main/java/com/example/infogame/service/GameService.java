@@ -6,6 +6,8 @@ import com.example.infogame.dto.game.GameResponseDto;
 import com.example.infogame.dto.game.GameUpdateDto;
 import com.example.infogame.models.Game;
 import com.example.infogame.repository.GameRepository;
+import com.example.infogame.validation.DtoValidator;
+import com.example.infogame.validation.DtoValidatorImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +29,9 @@ public class GameService {
     }
 
     public GameResponseDto createGame(GameCreateDto gameCreateDto) {
+        DtoValidator<GameCreateDto> validator = new DtoValidatorImpl<>();
+        validator.validate(gameCreateDto);
+
         Game game = gameRepository.save(GameDtoMapper.INSTANCE.fromEntity(gameCreateDto));
         return GameDtoMapper.INSTANCE.gameResponseFromEntity(game);
     }
@@ -43,6 +48,9 @@ public class GameService {
     }
 
     public GameResponseDto updateGame(int gameId, GameUpdateDto gameUpdateDto) {
+        DtoValidator<GameUpdateDto> validator = new DtoValidatorImpl<>();
+        validator.validate(gameUpdateDto);
+
         Game game = getGameByIdOrNotFound(gameId);
         try {
             updateGame(gameId, gameUpdateDto, game);
